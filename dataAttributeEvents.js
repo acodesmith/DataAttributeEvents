@@ -9,6 +9,7 @@
     // Create the defaults once
     var pluginName = "dataTriggers",
         defaults = {
+            dataAttribute:'event'
         };
 
     // The actual plugin constructor
@@ -29,17 +30,18 @@
             return size;
         },
         init: function (options) {
-            $('body').on('click','['+options.attribute+']',function(e){
+            $('body').on('click','[data-'+options.dataAttribute+']',function(e){
                 var $el = $(this);
 
-                if(typeof $el.data('event') != 'undefined' && $el.data('event').length > 0){
+                if(typeof $el.data(options.dataAttribute) != 'undefined'){
                     e.preventDefault();
                 }
 
-                if(typeof options.triggers != 'undefined' && typeof options.triggers[$el.data('event')]=='function'){
-                    options.triggers[$el.data('event')]($el);
+                if(typeof options.triggers != 'undefined'
+                    && typeof options.triggers[$el.data(options.dataAttribute)]=='function'){
+                    options.triggers[$el.data(options.dataAttribute)]($el);
                 }else{
-                    console.log('No Trigger for: '+$el.data('event'));
+                    console.log('No Trigger for data-'+$el.data(options.dataAttribute));
                 }
             });
 
