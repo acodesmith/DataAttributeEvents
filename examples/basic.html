@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Attribute Events - Basic Examples</title>
+    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="_/js/jquery.dataAttributeEvents.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Advent+Pro:700,400,200">
+    <style type="text/css">
+        * {
+            font-family: 'Advent Pro', sans-serif;
+        }
+
+        body,html {
+            background:#bdc3c7;
+            margin: 0;
+            padding: 0;
+        }
+        article {
+            text-align:center;
+            padding:2em;
+        }
+        article.active {
+            background:#f1c40f;
+        }
+
+        a, div {
+            color:#2c3e50;
+            text-decoration:none;
+            font-size:2em;
+            padding: 1em 0;
+        }
+        a:hover {
+            color:#2980b9;
+        }
+
+        section {
+            margin: 1em;
+            text-align: center;
+        }
+
+        h1 {
+            color: #323333;
+            text-align: center;
+            font-weight: bold;
+            margin: auto auto 1em;
+            border-bottom: 0.1em solid #e1e1e1;
+            background: #84BCE2;
+            padding: 0.5em;
+            box-shadow: 0 0 0.5em #bbbbbb;
+            outline: 0.1em solid #333B3C;
+            font-size: 3em;
+            text-shadow: 1px 1px #FFF;
+        }
+
+        small {
+            font-size: 50%;
+            display: block;
+            color: #18751f;
+            margin: 0.5em;
+        }
+
+        select {
+            font-size: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Data Attribute Event Examples</h1>
+    <section>
+        <a href="#clicker" data-events="eventName">
+            Click me and I'll change!
+        </a>
+        <hr />
+        <div data-hover="oneTime">
+            Hover me and I'll leave!
+        </div>
+        <hr/>
+        <div>
+            <p>
+                Trigger a change event...
+            </p>
+            <select data-change="thanks">
+                <option>Change Me</option>
+                <option>I'll never be the same</option>
+                <option>but I'll always love you.</option>
+            </select>
+        </div>
+        <hr />
+    </section>
+    <script type="text/javascript">
+        $(window).dataTriggers([
+            {
+                dataAttribute: 'events',
+                triggers: {
+                    eventName: function($el)
+                    {
+                        $el.text('You clicked me!');
+                    }
+                }
+            },
+            {
+                dataAttribute: 'hover',
+                event: 'mouseenter',
+                triggers: {
+                    oneTime: function($el)
+                    {
+                        $el.css('visibility','hidden');
+                    }
+                }
+            },
+            {
+                dataAttribute:'change',
+                event:'change',
+                triggers: {
+                    thanks: function($el)
+                    {
+                        var thanks = $(document.createElement('small'));
+
+                        if(!$el.hasClass('changed')){
+                            $el.after(thanks.text('Oh, my how you have changed.'))
+                                    .addClass('changed');
+                        }
+                    }
+                }
+            }
+        ]);
+
+    </script>
+</body>
+</html>
